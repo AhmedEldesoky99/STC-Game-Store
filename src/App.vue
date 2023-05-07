@@ -6,8 +6,8 @@
 </template>
 
 <script>
-import { reactive } from "vue";
-
+import { reactive, provide, onMounted } from "vue";
+import axios from "axios";
 import compNavbar from "./components/Navbar/index.vue";
 import { categoriesData } from "./components/data";
 
@@ -18,6 +18,20 @@ export default {
   },
   setup() {
     let categories = reactive(categoriesData);
+    let recommendedGames = reactive({ games: [] });
+    provide("games", recommendedGames);
+    function getAllData() {
+      axios
+        .get("http://jsonplaceholder.typicode.com/posts")
+        .then(({ data }) => {
+          recommendedGames.games = data;
+        })
+        .catch((err) => console.log(err));
+    }
+    onMounted(() => {
+      getAllData();
+    });
+
     return {
       categories,
     };

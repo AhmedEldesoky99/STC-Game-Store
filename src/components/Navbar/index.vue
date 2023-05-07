@@ -7,7 +7,14 @@
         </div>
       </router-link>
       <div class="navbar__icons">
-        <div class="search">
+        <input
+          v-show="showSearch"
+          placeholder="Let's find your game"
+          name="search"
+          v-model="search"
+          class="input__search"
+        />
+        <div class="search" @click="searchToggle">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -73,6 +80,7 @@
 </template>
 
 <script>
+import { ref } from "vue";
 import customBtn from "../Btns/btn.vue";
 export default {
   name: "compNavbar",
@@ -81,8 +89,19 @@ export default {
   },
   props: ["categories"],
   setup(props) {
+    let search = ref("");
+    let showSearch = ref(false);
+
+    function searchToggle() {
+      console.log(showSearch);
+      showSearch.value = !showSearch.value;
+      search.value = "";
+    }
     return {
       data: props.categories,
+      search,
+      showSearch,
+      searchToggle,
     };
   },
 };
@@ -102,6 +121,7 @@ export default {
   &__icons {
     display: flex;
     gap: 1rem;
+    align-items: center;
 
     svg {
       cursor: pointer;
@@ -117,6 +137,14 @@ export default {
     display: flex;
     gap: 0.5rem;
     flex-wrap: nowrap;
+    overflow-x: auto !important;
+  }
+}
+.input {
+  &__search {
+    border-radius: 1rem;
+    border: 0.2rem solid #777;
+    padding: 1rem;
   }
 }
 </style>

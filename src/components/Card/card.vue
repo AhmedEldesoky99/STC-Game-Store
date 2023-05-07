@@ -3,8 +3,8 @@
     <div class="card__img-box">
       <img src="../../assets/images/Bitmap.svg" class="card__img" />
     </div>
-    <h3 class="card__title">Asphalt 9: Legends - Epic Car Action…</h3>
-    <router-link to="/game/5">
+    <h3 class="card__title">{{ name }}:{{ description }}...</h3>
+    <router-link :to="`/game/${id}`">
       <customBtn value="more info" :onClick="handleBtn">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -33,13 +33,16 @@ export default {
   components: {
     customBtn,
   },
-  setup() {
+  props: ["item"],
+  setup(props) {
     function handleBtn() {
       console.log("clicked");
     }
-
     return {
       handleBtn,
+      name: props.item?.title.slice(0, 5),
+      description: props.item?.body.slice(0, 20),
+      id: props.item.id,
     };
   },
 };

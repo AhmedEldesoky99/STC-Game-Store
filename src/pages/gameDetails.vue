@@ -13,12 +13,12 @@
       </div>
     </div>
     <div class="m--mid"></div>
-    <cardsContainer :data="recommendsGames" title="Most Popular" />
+    <cardsContainer :data="games" title="Most Popular" />
   </div>
 </template>
 
 <script>
-import { reactive } from "vue";
+import { reactive, inject ,toRefs} from "vue";
 import cardsContainer from "../components/Card/container.vue";
 export default {
   name: "detailsPage",
@@ -28,8 +28,11 @@ export default {
 
   setup() {
     const recommendsGames = reactive(Array(6).fill(0));
+    let localGames = inject("games");
+
     return {
       recommendsGames,
+      ...toRefs(localGames),
     };
   },
 };

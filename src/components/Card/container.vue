@@ -5,7 +5,7 @@
       <p @click="seeMoreHandler" class="seeMore">SEE ALL</p>
     </div>
     <div class="cards-container__row">
-      <gameCard v-for="(_, i) of localData" :key="i" />
+      <gameCard v-for="item of localData" :key="item.id" :item="item" />
     </div>
   </div>
 </template>
@@ -21,13 +21,12 @@ export default {
 
   setup(props) {
     let seeMore = ref(5);
-    let localData = props.data.slice(0, seeMore.value);
     function seeMoreHandler() {
-      seeMore.value = props.data.length;
+      seeMore.value = props.data?.length;
     }
 
     return {
-      localData,
+      localData: props.data?.slice(0, seeMore.value),
       seeMoreHandler,
     };
   },
